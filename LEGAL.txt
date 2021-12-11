@@ -1,0 +1,33 @@
+Since this code was created with reference to decompiled Python code
+from Ableton's 'MIDI Remote Scripts' folder, I cannot know whether the
+code is licenseable or not as I don't know what the original Ableton script
+code is licensed under.
+
+However, the following message does appear in some of the Ableton Push code:
+    
+    Disclaimer: Any use of the Push control surface code (the "Code")
+    or parts thereof for commercial purposes or in a commercial context
+    is not allowed. Though we do not grant a license for non-commercial
+    use of the Code, you may use it in this regard but should be aware that
+    (1) we reserve the right to deny the future use any time and
+    (2) you need to check whether the use is allowed under the national law
+    applicable to your use.
+	
+While I have used no Push code in these scripts, it is probable that
+some or all of the Ableton Live included Remote Scripts code falls under 
+the same or a similar disclaimer.
+
+Based on the above, here are my restrictions:
+DO NOT COPY CODE FROM THESE .py SCRIPTS FOR USE FOR COMMERCIAL PURPOSES!
+
+I have published these scripts FREE OF CHARGE on github.com/bangstk/MPK2Plus
+Usage of the scripts is intended for controlling Ableton Live with Akai MPK2
+devices and for reference purposes (as there is very little public 
+documentation on Ableton Live MIDI Remote Script code).
+
+Selling this code or bundling it with a new device may fall afoul of Ableton
+themselves!
+
+If any Ableton or Akai employees wish to make my Ableton integration code
+official for the MPK2 line, please contact me (bangstk on Github) and I
+would be glad to re-create the code under a proper legal environment.

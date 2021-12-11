@@ -1,0 +1,91 @@
+MPK249
+
+Reason Preset
+
+
+Name			Channel		Note/CC#
+
+DAWUp			4			29
+DAWDown			4			30
+DAWLeft			4			31
+DAWRight		4			32
+DAWEnter		4			33
+Knobs A			1			2-9
+Knobs B			2			2-9
+Knobs C			3			2-9
+Sliders A		1			12-19
+Sliders B		2			12-19
+Sliders C		3			12-19
+Buttons A		1			21-28
+Buttons B		2			21-28
+Buttons C		3			21-28
+Pads A			1			C1-D#2
+Pads B			3			E2-G3
+Pads C			4			G#3-B4
+Pads D			5			C-2-D#-1
+Rew				MMC
+Fwd				MMC
+Stop			MMC
+Play			MMC
+Rec				MMC
+
+
+
+LiveLite
+
+
+Name			Channel		Note/CC#
+
+DAWUp			Keystroke	UpArrow
+DAWDown			Keystroke	DownArrow
+DAWLeft			Keystroke	LeftArrow
+DAWRight		Keystroke	RightArrow
+DAWEnter		Keystroke	Return
+Knobs A			1			22-29
+Knobs B			2			22-29
+Knobs C			3			22-29
+Sliders A		1			12-19
+Sliders B		2			12-19
+Sliders C		3			12-19
+Buttons A		1			32-39
+Buttons B		2			32-39
+Buttons C		3			32-39
+Pads A			2			C3-D5
+Pads B			3			C3-D5
+Pads C			4			C3-D5
+Pads D			5			C3-D5
+Rew				1			115
+Fwd				1			116
+Stop			1			117
+Play			1			118
+Rec				1			119
+
+
+LiveLiteMOD
+
+
+Name			Channel		Note/CC#
+
+DAWUp			1			2
+DAWDown			1			3
+DAWLeft			1			4
+DAWRight		1			5
+DAWEnter		1			6
+Knobs A			1			22-29
+Knobs B			2			22-29
+Knobs C			3			22-29
+Sliders A		1			12-19
+Sliders B		2			12-19
+Sliders C		3			12-19
+Buttons A		1			32-39
+Buttons B		2			32-39
+Buttons C		3			32-39
+Pads A			2			C3-D5
+Pads B			3			C3-D5
+Pads C			4			C3-D5
+Pads D			5			C3-D5
+Rew				1			115
+Fwd				1			116
+Stop			1			117
+Play			1			118
+Rec				1			119
