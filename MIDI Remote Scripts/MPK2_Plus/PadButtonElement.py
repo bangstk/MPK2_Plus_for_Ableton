@@ -1,6 +1,6 @@
 #
 #   PadButtonElement.py
-#   Derived ButtonElement class that stores this pad's index, so its Color can send the sysex message to set the right pad's color.
+#   Derived ButtonElement class that stores this pad's index, so the button can also send the sysex message to set the correct pad's color.
 #
 
 from __future__ import absolute_import, print_function, unicode_literals
