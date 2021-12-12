@@ -6,63 +6,50 @@
 from __future__ import absolute_import, print_function, unicode_literals
 from _Framework.ButtonElement import Color
 
-# Color class which will set the drum pad color
-class SysexColor(Color):
-	def __init__(self, midi_value = 0, *a, **k):
-		super(SysexColor, self).__init__(midi_value, *a, **k)
-
-	# pad_num is used to determine the mem address for the correct pad's color in sysex msg
-	# pad_num is 0 - 63, which are all 4 banks of pads (split into banks of 16)
-	def draw(self, interface, pad_num):
-        # Send midi note on/off to make the pad light up
-        interface.send_value(self.midi_value)
-        # Send sysex message to set this pad's color
-
 # Color class which will set drum pad color and make it blink
-class BlinkSysexColor(SysexColor):
+class BlinkColor(Color):
 	def __init__(self, midi_value = 0, *a, **k):
-		super(BlinkSysexColor, self).__init__(midi_value, *a, **k)
+		super(BlinkColor, self).__init__(midi_value, *a, **k)
 
 	# TODO: Pad Blinker
 	# It looks like all other fancy keyboards have blinking built in to their hardware. MPK2 doesn't.
-	# Search _Framework for some kind of timer to toggle note on/off to make pad blink.
+	# Search _Framework for some kind of repeating timer to toggle note on/off to make pad blink.
 	# Preferably based on tempo...
-	# Until then BlinkSysexColor will behave exactly the same as SysexColor
+	# Until then BlinkColor will behave exactly the same as Color
 
-	# def draw(self, interface, pad_num):
+	# def draw(self, interface):
 		# blinker code goes here
 
 # Define human readable color names for MPK2's pad color choices
 # The color index is used to create the correct sysex message in the above color classes
 class MPK2PadColors:
-    BLACK = SysexColor(0)
-	RED = SysexColor(1)
-	ORANGE = SysexColor(2)
-	YELLOW = SysexColor(3)	# Called 'Amber' by MPK2's settings
-	YELLOW_GREEN = SysexColor(4)	# Called 'Yellow' by MPK2's settings
-	GREEN = SysexColor(5)
-	GREEN_BLUE = SysexColor(6)
-	AQUA = SysexColor(7)	# Sky blue, called 'Aqua' by MPK2's settings
-	LT_BLUE = SysexColor(8)	# Darker blue than AQUA but lighter than BLUE
-	BLUE = SysexColor(9)
-	PURPLE = SysexColor(10)
-	PINK = SysexColor(11)
-	HOT_PINK = SysexColor(12)
-	LT_PURPLE = SysexColor(13)
-	LT_GREEN = SysexColor(14)	# Very pale blue/green
-	LT_PINK = SysexColor(15)
-	GREY = SysexColor(16)	# Not quite as bright as white, but as close as we can get
+	BLACK = Color(0)
+	RED = Color(1)
+	ORANGE = Color(2)
+	YELLOW = Color(3)	# Called 'Amber' by MPK2's settings
+	YELLOW_GREEN = Color(4)	# Called 'Yellow' by MPK2's settings
+	GREEN = Color(5)
+	GREEN_BLUE = Color(6)
+	AQUA = Color(7)	# Sky blue, called 'Aqua' by MPK2's settings
+	LT_BLUE = Color(8)	# Darker blue than AQUA but lighter than BLUE
+	BLUE = Color(9)
+	PURPLE = Color(10)
+	PINK = Color(11)
+	HOT_PINK = Color(12)
+	LT_PURPLE = Color(13)
+	LT_GREEN = Color(14)	# Very pale blue/green
+	LT_PINK = Color(15)
+	GREY = Color(16)	# Not quite as bright as white, but as close as we can get
 
 class MPK2PadBlinkColors:
-	RED_BLINK = BlinkSysexColor(1)
-	ORANGE_BLINK = BlinkSysexColor(2)
-	YELLOW_BLINK = BlinkSysexColor(3)
-	GREEN_BLINK = BlinkSysexColor(5)
-	HOT_PINK_BLINK = BlinkSysexColor(12)
+	RED_BLINK = BlinkColor(1)
+	ORANGE_BLINK = BlinkColor(2)
+	YELLOW_BLINK = BlinkColor(3)
+	GREEN_BLINK = BlinkColor(5)
+	HOT_PINK_BLINK = BlinkColor(12)
 
 # Color table used to map Ableton RGB color to an MPK2 pad color index
-LIVE_RGB_VALUE_TO_MIDI_VALUE_TABLE = 
-{
+LIVE_RGB_VALUE_TO_MIDI_VALUE_TABLE = {
 	# Stock Ableton 10+ clip color set
 	0xffb1be: 15, 0xffb249:  2, 0xd6ac4e:  2, 0xfaf7a5:  3, 0xc5fb1a:  4, 0x38ff4a:  5, 0x45ffb5:  6, 0x7effed: 14, 0xa9d4ff: 13, 0x87a6ec: 13, 0xafbfff: 13, 0xe6a2ee: 15, 0xed85bc: 15, 0xffffff: 16,
 	0xff5757:  1, 0xf77b1e:  2, 0xb49473:  2, 0xfff255:  3, 0xa2ff89: 14, 0x47c80c:  5, 0x0bc4b5:  7, 0x37ecff:  7, 0x32b1f0:  7, 0x0c84c5:  8, 0xb3a2ee: 13, 0xb3a2ee: 15, 0xff5adb: 12, 0xf9f9f9: 16,
@@ -80,8 +67,7 @@ LIVE_RGB_VALUE_TO_MIDI_VALUE_TABLE =
 
 # Color table used to match an Ableton RGB color to its closest MPK2 pad color index
 # Only used if a color is not found in the above table
-MIDI_VALUE_TO_RGB_COLOR_TABLE = 
-(
+MIDI_VALUE_TO_RGB_COLOR_TABLE = (
 	(0, 0x000000),	# Off
 	(1, 0xFF0000),	# Red
 	(2, 0xFFC000),	# Orange
