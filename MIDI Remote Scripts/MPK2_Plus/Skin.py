@@ -21,7 +21,7 @@ class Colors:
         # Clip recording
         RecordButton = MPK2PadColors.RED
         ClipTriggeredRecord = MPK2PadBlinkColors.HOT_PINK
-        ClipRecording = MPK2PadColors.RED_BLINK
+        ClipRecording = MPK2PadBlinkColors.RED
 
         # Clip stopping row
         StopClip = MPK2PadColors.RED

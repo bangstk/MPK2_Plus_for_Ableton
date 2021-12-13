@@ -1,6 +1,6 @@
 #
 #	Colors.py
-#   Define color classes & Ableton-to-MPK2 pad color mappings
+#	Define color classes & Ableton-to-MPK2 pad color mappings
 #
 
 from __future__ import absolute_import, print_function, unicode_literals
@@ -10,6 +10,9 @@ from _Framework.ButtonElement import Color
 class BlinkColor(Color):
 	def __init__(self, midi_value = 0, *a, **k):
 		super(BlinkColor, self).__init__(midi_value, *a, **k)
+		
+	def draw(self, interface):
+		interface.send_value(self.midi_value, channel = 9)
 
 	# TODO: Pad Blinker
 	# It looks like all other fancy keyboards have blinking built in to their hardware. MPK2 doesn't.
@@ -42,11 +45,12 @@ class MPK2PadColors:
 	GREY = Color(16)	# Not quite as bright as white, but as close as we can get
 
 class MPK2PadBlinkColors:
-	RED_BLINK = BlinkColor(1)
-	ORANGE_BLINK = BlinkColor(2)
-	YELLOW_BLINK = BlinkColor(3)
-	GREEN_BLINK = BlinkColor(5)
-	HOT_PINK_BLINK = BlinkColor(12)
+	RED = Color(1)
+	ORANGE = Color(2)
+	YELLOW = Color(3)
+	YELLOW_GREEN = Color(4)
+	GREEN = Color(5)
+	HOT_PINK = Color(12)
 
 # Color table used to map Ableton RGB color to an MPK2 pad color index
 LIVE_RGB_VALUE_TO_MIDI_VALUE_TABLE = {
