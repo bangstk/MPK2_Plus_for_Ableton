@@ -13,16 +13,19 @@ These scripts were made for Ableton 10 and should work with 11.
 
 # Features In Development:
 - Support for MPK225 and MPK261
-- Drum Rack still accessible through Pads Bank D
+- Drum Rack accessible through Pads Bank D
 - Dedicated Master Volume fader on the rightmost fader
-- Rightmost mixer button toggles whether other buttons do Arm, Solo, Mute, or Select
-- Holding that button lets you control whether Knobs do Pan, Sends A-D, or Macros
+- Select whether mixer buttons do Arm, Solo, Mute, or Select
+- Select wherther knobs do Pan, Sends A-D, or Macros
+- Knobs are infinite scrollers a la Push
 - See which button and knob modes are active right on the MPK2's screen
 
 # Installation:
 Follow Ableton's instructions for script installation: https://help.ableton.com/hc/en-us/articles/209072009-Installing-third-party-remote-scripts
 
 In Ableton's MIDi settings, select "MPK2_Plus_MPK249" instead of the default "MPK249" device to use this script.
+
+On your MPK2, use the built-in Bitwig preset! This script is created for that mapping only. Do not use the LiveLite preset.
 
 # Thanks To...
 
