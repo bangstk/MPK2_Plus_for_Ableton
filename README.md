@@ -9,7 +9,7 @@ I am developing Ableton control scripts which hopefully make these keyboards muc
 These scripts were made for Ableton 10 and should work with 11.
 
 # Implemented Features:
-- See and control your Ableton Session on the 4x4 colored pads grid Bank A
+- See and control your Ableton Session on the 4x4 colored pads grid Bank A and DAW Control nav buttons
 
 # Features In Development:
 - Support for MPK225 and MPK261
