@@ -1,6 +1,6 @@
 #
-#   MPK249_Plus.py
-#   Main controller code for MPK249
+#	MPK249_Plus.py
+#	Main controller code for MPK249
 #
 
 from __future__ import absolute_import, print_function, unicode_literals
@@ -31,43 +31,43 @@ PADS_HEIGHT = 4
 
 class MPK249_Plus(ControlSurface):
 
-    def __init__(self, *a, **k):
-        super(MPK249_Plus, self).__init__(*a, **k)
-        
-        self._skin = make_default_skin()
-        
-        with self.component_guard():
-            self._create_controls()
-            self._create_session()
-            self.set_highlighting_session_component(self._session)
+	def __init__(self, *a, **k):
+		super(MPK249_Plus, self).__init__(*a, **k)
+		
+		self._skin = make_default_skin()
+		
+		with self.component_guard():
+			self._create_controls()
+			self._create_session()
+			self.set_highlighting_session_component(self._session)
 
-    # Create button objects
-    def _create_controls(self):
-        # Nav
-        self._btn_nav_up = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV, name = u'Nav_Up_Button')
-        self._btn_nav_down = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 1, name = u'Nav_Down_Button')
-        self._btn_nav_left = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 2, name = u'Nav_Left_Button')
-        self._btn_nav_right = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 3, name = u'Nav_Right_Button')
-        self._btn_nav_ok = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 4, name = u'Nav_OK_Button')
+	# Create button objects
+	def _create_controls(self):
+		# Nav
+		self._btn_nav_up = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV, name = u'Nav_Up_Button')
+		self._btn_nav_down = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 1, name = u'Nav_Down_Button')
+		self._btn_nav_left = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 2, name = u'Nav_Left_Button')
+		self._btn_nav_right = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 3, name = u'Nav_Right_Button')
+		self._btn_nav_ok = ButtonElement(True, msg_type = MIDI_CC_TYPE, channel = 1, identifier = CC_NAV + 4, name = u'Nav_OK_Button')
 
-        # Pads
-        pad_rows = []
-        current_pad_num = 0
-        for i in range(PADS_HEIGHT):
-            pad_row = []
-            for j in range(PADS_WIDTH):
-                pad_button = PadButtonElement(True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + current_pad_num, pad_num = current_pad_num, skin=self._skin, name = u'Pad_{}_{}'.format(j, i) )
-                current_pad_num = current_pad_num + 1
-                pad_row.append( pad_button )
-            pad_rows.insert(0, pad_row) # put new row before the previous one, because the MPK2 numbers the pads starting from bottom and not top
-        self._btn_pads_matrix = ButtonMatrixElement(rows = pad_rows, name=u'Pad_Button_Matrix')
-    
-    # Assign pad buttons and nav buttons to session component
-    def _create_session(self):
-        self._session = SessionComponent(num_tracks = PADS_WIDTH, num_scenes = PADS_WIDTH, name = u'Session', is_enabled = False, enable_skinning = True)
-        self._session.set_scene_bank_buttons(down_button = self._btn_nav_down, up_button = self._btn_nav_up)
-        self._session.set_track_bank_buttons(right_button = self._btn_nav_right, left_button = self._btn_nav_left)
-        self._session.set_clip_launch_buttons(self._btn_pads_matrix)
-        self._session.set_rgb_mode(color_palette = LIVE_RGB_VALUE_TO_MIDI_VALUE_TABLE, color_table = MIDI_VALUE_TO_RGB_COLOR_TABLE)
-        self._session.set_show_highlight(True)
-        self._session.set_enabled(True)
+		# Pads
+		pad_rows = []
+		current_pad_num = 0
+		for i in range(PADS_HEIGHT):
+			pad_row = []
+			for j in range(PADS_WIDTH):
+				pad_button = PadButtonElement(True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + current_pad_num, pad_num = current_pad_num, skin=self._skin, name = u'Pad_{}_{}'.format(j, i) )
+				current_pad_num = current_pad_num + 1
+				pad_row.append( pad_button )
+			pad_rows.insert(0, pad_row) # put new row before the previous one, because the MPK2 numbers the pads starting from bottom and not top
+		self._btn_pads_matrix = ButtonMatrixElement(rows = pad_rows, name=u'Pad_Button_Matrix')
+	
+	# Assign pad buttons and nav buttons to session component
+	def _create_session(self):
+		self._session = SessionComponent(num_tracks = PADS_WIDTH, num_scenes = PADS_WIDTH, name = u'Session', is_enabled = False, enable_skinning = True)
+		self._session.set_scene_bank_buttons(down_button = self._btn_nav_down, up_button = self._btn_nav_up)
+		self._session.set_track_bank_buttons(right_button = self._btn_nav_right, left_button = self._btn_nav_left)
+		self._session.set_clip_launch_buttons(self._btn_pads_matrix)
+		self._session.set_rgb_mode(color_palette = LIVE_RGB_VALUE_TO_MIDI_VALUE_TABLE, color_table = MIDI_VALUE_TO_RGB_COLOR_TABLE)
+		self._session.set_show_highlight(True)
+		self._session.set_enabled(True)

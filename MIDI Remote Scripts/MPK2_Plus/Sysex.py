@@ -1,6 +1,6 @@
 #
-#   Sysex.py
-#   Defines hardcoded sysex message stuff
+#	Sysex.py
+#	Defines hardcoded sysex message stuff
 #
 
 from __future__ import absolute_import, print_function, unicode_literals
