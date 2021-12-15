@@ -5,7 +5,7 @@
 
 from __future__ import absolute_import, print_function, unicode_literals
 from _Framework.Skin import Skin
-from .Colors import MPK2PadColors, MPK2PadBlinkColors
+from .Colors import MPK2PadColors, MPK2PadBlinkColors, MPK2PadPulseColors
 
 class Colors:
 
@@ -15,13 +15,13 @@ class Colors:
 		ClipStopped = MPK2PadColors.ORANGE
 
 		# Clip playing
-		ClipTriggeredPlay = MPK2PadBlinkColors.YELLOW_GREEN
-		ClipStarted = MPK2PadBlinkColors.GREEN
+		ClipTriggeredPlay = MPK2PadBlinkColors.GREEN
+		ClipStarted = MPK2PadPulseColors.GREEN
 
 		# Clip recording
 		RecordButton = MPK2PadColors.RED
-		ClipTriggeredRecord = MPK2PadBlinkColors.HOT_PINK
-		ClipRecording = MPK2PadBlinkColors.RED
+		ClipTriggeredRecord = MPK2PadBlinkColors.RED
+		ClipRecording = MPK2PadPulseColors.RED
 
 		# Clip stopping row
 		StopClip = MPK2PadColors.RED

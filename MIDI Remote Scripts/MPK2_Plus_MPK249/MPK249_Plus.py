@@ -11,6 +11,7 @@ from _Framework.ControlSurface import ControlSurface, MIDI_CC_TYPE, MIDI_NOTE_TY
 from _Framework.DrumGroupComponent import DrumGroupComponent
 from _Framework.EncoderElement import EncoderElement
 from _Framework.MixerComponent import MixerComponent
+from _Framework import Task
 from _Framework.TransportComponent import TransportComponent
 from _Framework.Util import const
 from _Framework.SessionComponent import SessionComponent
@@ -30,6 +31,8 @@ PADS_HEIGHT = 4
 NUM_MIXER_BANKS = 3
 NUM_MIXER_TRAX = 8
 
+PAD_COLOR_DELAY_MSEC = 0.001
+
 # MIDi note/CC definitions - based on MPK2's Bitwig preset
 CC_NAV = 60
 CC_TRANSPORT = 114
@@ -40,7 +43,7 @@ NOTE_PADS = 36
 
 class MPK249_Plus(ControlSurface):
 
-	# devine sysex device id here so MPK261 can inherit this class & override the id
+	# define sysex device id here so MPK261 can inherit this class & override the id
 	sysex_device_id = SYX_DEVICE_ID
 
 	def __init__(self, *a, **k):
@@ -57,6 +60,12 @@ class MPK249_Plus(ControlSurface):
 			self._create_session()
 			self.set_highlighting_session_component(self._session)
 			# self._create_drums()
+
+		# set up looping tasks to deal with pad colors
+		self._pulse_seq = 0
+		self._task_pad_color = self._tasks.add(Task.loop( Task.run(self._send_all_pad_colors) ) )
+		self._task_pad_blink = self._tasks.add(Task.loop( Task.sequence(Task.run(self._send_pad_blinks_on), Task.wait(1/8), Task.run(self._send_pad_blinks_off), Task.wait(1/8)) ) )
+		self._task_pad_pulse = self._tasks.add(Task.loop( Task.run(self._send_pad_pulse) ) )
 
 	# Create objects for all physical controls
 	def _create_controls(self):
@@ -80,7 +89,7 @@ class MPK249_Plus(ControlSurface):
 		for i in range (NUM_MIXER_BANKS):
 			for j in range (NUM_MIXER_TRAX):
 				new_knob = EncoderElement(msg_type = MIDI_CC_TYPE, channel = i + 1, identifier = CC_KNOBS + j, map_mode = Live.MidiMap.MapMode.relative_smooth_two_compliment, name = u'Knob_{}'.format(i * NUM_MIXER_TRAX + j))
-				new_knob.mapping_sensitivity = 2.0	# make knob movement speed match closer what is seen on Ableton's macro knob - easier to go from 0 to max value with 1 twist of wrist too
+				new_knob.mapping_sensitivity = 2.0	# make knob movement speed match what is seen on Ableton's macro knob - easier to go from 0 to max value with 1 twist of wrist too
 				knobs_list.append(new_knob)
 		self._knobs_matrix = ButtonMatrixElement(rows = [knobs_list])
 
@@ -162,4 +171,50 @@ class MPK249_Plus(ControlSurface):
 		self._drums = DrumGroupComponent(translation_channel = 9, name = u'Drums', is_enabled = False)
 		self._drums.set_drum_matrix(self._btn_pads_bank_d_matrix)
 		self._drums.set_enabled(True)
-		
+	
+	# Polls all pads for its color index, sends a sysex message to MPK2 to update all pads colors at once
+	def _send_all_pad_colors(self):
+		pad_colors = ()
+		pad_row = ()
+		pad = None
+
+		pad_row_count = 0
+		something_changed = False
+
+		# check if a pad changed since last send, if so, gather all pad colors into a list and send it thru sysex
+		for pad in self._btn_pads_bank_a_matrix:
+			if pad.did_change == True:
+				something_changed = True
+
+			pad_row += (pad.get_color(), )
+			pad.did_change = False
+			pad_row_count += 1
+
+			if pad_row_count == PADS_WIDTH:
+				pad_row_count = 0
+				pad_colors = pad_row + pad_colors
+				pad_row = ()
+
+		# doesnt matter what button object we send from, so just use the last one
+		if something_changed == True:
+			pad.send_midi( (Sysex.SYX_START, ) + Sysex.SYX_AKAI_ID + (self.sysex_device_id, ) + Sysex.SYX_FUNC_SET_PAD_COLOR_ALL + (Sysex.SYX_PAD_OFF_BASE_HB, ) + ( Sysex.SYX_PAD_OFF_BASE_LB, ) + pad_colors + (Sysex.SYX_END, ) )
+			pad.send_note_on_off()	# pad color changes seem to be delayed until a pad note event happens, so always do one
+
+	def _send_pad_blinks_on(self):
+		for pad in self._btn_pads_bank_a_matrix:
+			pad.do_blink_on()
+
+	def _send_pad_blinks_off(self):
+		for pad in self._btn_pads_bank_a_matrix:
+			pad.do_blink_off()
+
+	def _send_pad_pulse(self):
+		seq = self._pulse_seq
+
+		for pad in self._btn_pads_bank_a_matrix:
+			pad.do_pulse(seq)
+			
+		self._pulse_seq += 1
+
+		if self._pulse_seq > 5:
+			self._pulse_seq = 0

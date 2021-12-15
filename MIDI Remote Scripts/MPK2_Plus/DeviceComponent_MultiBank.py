@@ -1,5 +1,5 @@
 #
-#	__init__.py
+#	DeviceComponent_MultiBank.py
 #	Extension of _Framework DeviceComponent to map multiple banks at once if enough controls are available
 #
 
@@ -17,7 +17,7 @@ class DeviceComponent_MultiBank(DeviceComponent):
 		self._bank_name, banks, index = self._current_bank_details()
 
 		# pack all parameters at current bank and above into 1 list
-		# TODO: if we're bluehanding something, skip parameters that aren't locked by macros, to not waste any controls
+		# TODO: if we're bluehanding something, skip parameters that are locked by macros, to not waste any controls
 		parameters = []
 
 		for index in range (index, len(banks)):
