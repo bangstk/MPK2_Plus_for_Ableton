@@ -31,7 +31,7 @@ PADS_HEIGHT = 4
 NUM_MIXER_BANKS = 3
 NUM_MIXER_TRAX = 8
 
-PAD_COLOR_DELAY_MSEC = 0.001
+BLINK_WAIT_TIME_SECS = 1 / 8
 
 # MIDi note/CC definitions - based on MPK2's Bitwig preset
 CC_NAV = 60
@@ -62,9 +62,15 @@ class MPK249_Plus(ControlSurface):
 			# self._create_drums()
 
 		# set up looping tasks to deal with pad colors
+		# Two of the tasks run as fast as possible because Task.wait() seems to have a minimum time that is too long for a smooth refresh rate.
+		# Ableton doesn't seem to make that a busy loop, CPU usage is not affected by not having a wait. So it's fine I guess.
+		# We have code later that makes sure we only send a pads color update only when needed, instead of at every tick.
+		#
+		# TODO: match pad blink/pulse time to current tempo
+		self._blink_seq = 0
 		self._pulse_seq = 0
 		self._task_pad_color = self._tasks.add(Task.loop( Task.run(self._send_all_pad_colors) ) )
-		self._task_pad_blink = self._tasks.add(Task.loop( Task.sequence(Task.run(self._send_pad_blinks_on), Task.wait(1/8), Task.run(self._send_pad_blinks_off), Task.wait(1/8)) ) )
+		self._task_pad_blink = self._tasks.add(Task.loop( Task.sequence(Task.run(self._send_pad_blink), Task.wait(BLINK_WAIT_TIME_SECS) ) ) )
 		self._task_pad_pulse = self._tasks.add(Task.loop( Task.run(self._send_pad_pulse) ) )
 
 	# Create objects for all physical controls
@@ -135,7 +141,7 @@ class MPK249_Plus(ControlSurface):
 	
 	# Assign knobs to device component
 	def _create_device(self):
-		self._device = DeviceComponent_MultiBank(device_selection_follows_track_selection = True, name=u'Device', is_enabled = False)
+		self._device = DeviceComponent_MultiBank(device_selection_follows_track_selection = True, name = u'Device', is_enabled = False)
 		self._device.set_parameter_controls(self._knobs_matrix)
 		self._device.set_enabled(True)
 
@@ -186,7 +192,8 @@ class MPK249_Plus(ControlSurface):
 			if pad.did_change == True:
 				something_changed = True
 
-			pad_row += (pad.get_color(), )
+			# MPK2 pad button order starts from the bottom row, so we have to stuff each new row at the beginning of the color list
+			pad_row += (pad.color_value, )
 			pad.did_change = False
 			pad_row_count += 1
 
@@ -196,18 +203,22 @@ class MPK249_Plus(ControlSurface):
 				pad_row = ()
 
 		# doesnt matter what button object we send from, so just use the last one
+		# We are using Pad Off colors for our Ableton session. See ButtonElement_Pad for details.
 		if something_changed == True:
 			pad.send_midi( (Sysex.SYX_START, ) + Sysex.SYX_AKAI_ID + (self.sysex_device_id, ) + Sysex.SYX_FUNC_SET_PAD_COLOR_ALL + (Sysex.SYX_PAD_OFF_BASE_HB, ) + ( Sysex.SYX_PAD_OFF_BASE_LB, ) + pad_colors + (Sysex.SYX_END, ) )
 			pad.send_note_on_off()	# pad color changes seem to be delayed until a pad note event happens, so always do one
 
-	def _send_pad_blinks_on(self):
+	# tell all pads to blink. Each pad will decide if it needs to blink or ignore this. We call them from here so all pads will blink in sync at any time.
+	def _send_pad_blink(self):
 		for pad in self._btn_pads_bank_a_matrix:
-			pad.do_blink_on()
+			pad.do_blink(self._blink_seq)
 
-	def _send_pad_blinks_off(self):
-		for pad in self._btn_pads_bank_a_matrix:
-			pad.do_blink_off()
+		if (self._blink_seq == 0):
+			self._blink_seq = 1
+		else:
+			self._blink_seq = 0
 
+	# tell all pads to go to the next color in the Pulsing color sequence. Each pad will decide if it needs to pulse or ignore this.
 	def _send_pad_pulse(self):
 		seq = self._pulse_seq
 

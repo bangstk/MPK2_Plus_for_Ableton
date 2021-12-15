@@ -26,6 +26,7 @@ These scripts were made for Ableton 10 and should work with 11.
 
 # Features In Development:
 - Support for MPK225
+- Hold DAW Control "OK" button to show a row of Track Stop buttons and a column of Scene Launch buttons on the Pads.
 - Drum Rack accessible through Pads Bank D
 - Dedicated Master Volume fader on the rightmost fader
 - Select whether mixer buttons do Arm, Solo, Mute, or Select
@@ -34,10 +35,12 @@ These scripts were made for Ableton 10 and should work with 11.
 
 # Installation:
 Follow Ableton's instructions for script installation: https://help.ableton.com/hc/en-us/articles/209072009-Installing-third-party-remote-scripts
+Copy all folders inside this repository's "MIDI Remote Scripts" folder into the Ableton Remote Script folder described on that webpage.
+
+On your MPK2, change to the built-in Bitwig preset! This script is created for that mapping only. Do not use the LiveLite preset. 
+Ironically, LiveLite does not map things in a good way for Ableton to easily map with a more involved script.
 
 In Ableton's MIDI settings, select "MPK2_Plus_MPK249" instead of the default "MPK249" device to use this script.
-
-On your MPK2, use the built-in Bitwig preset! This script is created for that mapping only. Do not use the LiveLite preset.
 
 # Thanks To...
 Thanks to the Ableton Live Scripts decompilation project.
