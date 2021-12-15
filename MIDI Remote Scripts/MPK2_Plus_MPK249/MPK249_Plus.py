@@ -40,6 +40,9 @@ NOTE_PADS = 36
 
 class MPK249_Plus(ControlSurface):
 
+	# devine sysex device id here so MPK261 can inherit this class & override the id
+	sysex_device_id = SYX_DEVICE_ID
+
 	def __init__(self, *a, **k):
 		super(MPK249_Plus, self).__init__(*a, **k)
 		
@@ -103,7 +106,7 @@ class MPK249_Plus(ControlSurface):
 		for i in range(PADS_HEIGHT):
 			pad_row = []
 			for j in range(PADS_WIDTH):
-				pad_button = PadButtonElement(is_momentary = True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + current_pad_num, pad_num = current_pad_num, skin=self._skin, name = u'Pad_A_{}_{}'.format(j, i) )
+				pad_button = PadButtonElement(is_momentary = True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + current_pad_num, pad_num = current_pad_num, sysex_device_id = self.sysex_device_id, skin = self._skin, name = u'Pad_A_{}_{}'.format(j, i) )
 				current_pad_num = current_pad_num + 1
 				pad_row.append( pad_button )
 			pad_rows_bank_a.insert(0, pad_row) # put new row before the previous one, because the MPK2 numbers the pads starting from bottom and not top
@@ -115,7 +118,7 @@ class MPK249_Plus(ControlSurface):
 		for i in range(PADS_HEIGHT):
 			pad_row = []
 			for j in range(PADS_WIDTH):
-				pad_button = PadButtonElement(True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + 48 + current_pad_num, pad_num = 48 + current_pad_num, skin=self._skin, name = u'Pad_D_{}_{}'.format(j, i) )
+				pad_button = PadButtonElement(True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + 48 + current_pad_num, pad_num = 48 + current_pad_num, sysex_device_id = self.sysex_device_id, skin = self._skin, name = u'Pad_D_{}_{}'.format(j, i) )
 				current_pad_num = current_pad_num + 1
 				pad_row.append( pad_button )
 			pad_rows_bank_d.insert(0, pad_row) # put new row before the previous one, because the MPK2 numbers the pads starting from bottom and not top
@@ -159,3 +162,4 @@ class MPK249_Plus(ControlSurface):
 		self._drums = DrumGroupComponent(translation_channel = 9, name = u'Drums', is_enabled = False)
 		self._drums.set_drum_matrix(self._btn_pads_bank_d_matrix)
 		self._drums.set_enabled(True)
+		
