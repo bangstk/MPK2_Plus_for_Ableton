@@ -10,13 +10,16 @@ These scripts were made for Ableton 10 and should work with 11.
 
 # Implemented Features:
 - See and control your Ableton Session on the 4x4 colored pads grid Bank A and DAW Control nav buttons
+- Knobs mapped to Macros, Faders mapped to Volume, buttons mapped to Arming (Tracks 1-8 only so far)
+- Transport buttons
 
 # Features In Development:
 - Support for MPK225 and MPK261
+- Knobs/buttons/faders automatically mapped for Tracks 9 and up in other banks
 - Drum Rack accessible through Pads Bank D
 - Dedicated Master Volume fader on the rightmost fader
 - Select whether mixer buttons do Arm, Solo, Mute, or Select
-- Select wherther knobs do Pan, Sends A-D, or Macros
+- Select whether knobs do Pan, Sends A-D, or Macros
 - Knobs are infinite scrollers a la Push
 - See which button and knob modes are active right on the MPK2's screen
 
