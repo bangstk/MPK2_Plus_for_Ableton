@@ -1,4 +1,4 @@
-# Enhanced Ableton Integration for MPK249 by bangstk
+# Enhanced Ableton Integration for Akai MPK2: MPK249 and MPK261, by bangstk
 
 SCRIPT IN DEVELOPMENT - NOT ALL FEATURES WORK YET - STAY TUNED
 
@@ -9,12 +9,13 @@ I am developing Ableton control scripts which hopefully make these keyboards muc
 These scripts were made for Ableton 10 and should work with 11.
 
 # Implemented Features:
+- Support for MPK249 and MPK261
 - See and control your Ableton Session on the 4x4 colored pads grid Bank A and DAW Control nav buttons
 - Knobs mapped to Macros, Faders mapped to Volume, buttons mapped to Arming (Tracks 1-8 only so far)
 - Transport buttons
 
 # Features In Development:
-- Support for MPK225 and MPK261
+- Support for MPK225
 - Knobs/buttons/faders automatically mapped for Tracks 9 and up in other banks
 - Drum Rack accessible through Pads Bank D
 - Dedicated Master Volume fader on the rightmost fader
