@@ -11,17 +11,22 @@ These scripts were made for Ableton 10 and should work with 11.
 # Implemented Features:
 - Support for MPK249 and MPK261
 - See and control your Ableton Session on the 4x4 colored pads grid Bank A and DAW Control nav buttons
-- Knobs mapped to Macros, Faders mapped to Volume, buttons mapped to Arming (Tracks 1-8 only so far)
 - Transport buttons
+- All 3 Control Banks of the Mixer section are now automapped for control of up to 24 tracks or macros/parameters
+    - Faders mapped to Volume
+    - Mixer buttons mapped to Arming
+    - Knobs mapped to Macros/Parameters
+        - Knobs now properly work as infinite scrollers, like Push
+        - Control the additional paramaters in Ableton 11's 16 Macro racks by using Bank B
+        - Use Bank B and C to control up to 24 parameters, for example when bluehanding a VST with many parameters mapped out in the Ableton instrument rack
+
 
 # Features In Development:
 - Support for MPK225
-- Knobs/buttons/faders automatically mapped for Tracks 9 and up in other banks
 - Drum Rack accessible through Pads Bank D
 - Dedicated Master Volume fader on the rightmost fader
 - Select whether mixer buttons do Arm, Solo, Mute, or Select
 - Select whether knobs do Pan, Sends A-D, or Macros
-- Knobs are infinite scrollers a la Push
 - See which button and knob modes are active right on the MPK2's screen
 
 # Installation:
@@ -37,3 +42,9 @@ Thanks to the Ableton Live Scripts decompilation project.
 https://github.com/gluon/AbletonLive10.1_MIDIRemoteScripts
 
 All of my code was written using the MIDI Control Scripts from there as a reference for how the Ableton _Framework works.
+
+# Help me out!
+I'm not yet a great performer, so I am seeking feedback from anyone who has any ideas on what could help their workflow if it is not listed above.
+Feel free to make suggestions in the Issues tab.
+
+I have ideas for mapping the MPK225 well for extra functionality, but I do not have one to test with. If anyone has one and is willing to be a guinea pig, contact me and I will get this script running on MPK225 in short order.

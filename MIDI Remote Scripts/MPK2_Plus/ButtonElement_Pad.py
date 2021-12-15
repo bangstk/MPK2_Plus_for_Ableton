@@ -1,5 +1,5 @@
 #
-#	PadButtonElement.py
+#	ButtonElement_Pad.py
 #	Derived ButtonElement class that stores this pad's index, so the button can also send the sysex message to set the correct pad's color.
 #
 
@@ -9,10 +9,10 @@ from .Skin import Skin
 from . import Sysex
 
 # Button used for pads only that sends sysex messages for color changing
-class PadButtonElement(ButtonElement):
+class ButtonElement_Pad(ButtonElement):
 
 	def __init__(self, is_momentary, msg_type, channel, identifier, pad_num = 0, sysex_device_id = 0x24, skin = Skin(), undo_step_handler = DummyUndoStepHandler(), *a, **k):
-		super(PadButtonElement, self).__init__(is_momentary, msg_type, channel, identifier, skin, undo_step_handler, *a, **k)
+		super(ButtonElement_Pad, self).__init__(is_momentary, msg_type, channel, identifier, skin, undo_step_handler, *a, **k)
 		self._pad_num = pad_num
 		self._sysex_device_id = sysex_device_id
 		self._old_value = -1

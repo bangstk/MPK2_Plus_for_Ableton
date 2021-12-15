@@ -8,7 +8,6 @@ import Live
 from _Framework.ButtonElement import ButtonElement
 from _Framework.ButtonMatrixElement import ButtonMatrixElement
 from _Framework.ControlSurface import ControlSurface, MIDI_CC_TYPE, MIDI_NOTE_TYPE
-from _Framework.DeviceComponent import DeviceComponent
 from _Framework.DrumGroupComponent import DrumGroupComponent
 from _Framework.EncoderElement import EncoderElement
 from _Framework.MixerComponent import MixerComponent
@@ -16,8 +15,9 @@ from _Framework.TransportComponent import TransportComponent
 from _Framework.Util import const
 from _Framework.SessionComponent import SessionComponent
 from _Framework.SliderElement import SliderElement
-from MPK2_Plus.PadButtonElement import PadButtonElement
+from MPK2_Plus.ButtonElement_Pad import ButtonElement_Pad
 from MPK2_Plus.Colors import LIVE_RGB_VALUE_TO_MIDI_VALUE_TABLE, MIDI_VALUE_TO_RGB_COLOR_TABLE
+from MPK2_Plus.DeviceComponent_MultiBank import DeviceComponent_MultiBank
 from MPK2_Plus.Skin import make_default_skin
 from MPK2_Plus import Sysex
 
@@ -106,7 +106,7 @@ class MPK249_Plus(ControlSurface):
 		for i in range(PADS_HEIGHT):
 			pad_row = []
 			for j in range(PADS_WIDTH):
-				pad_button = PadButtonElement(is_momentary = True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + current_pad_num, pad_num = current_pad_num, sysex_device_id = self.sysex_device_id, skin = self._skin, name = u'Pad_A_{}_{}'.format(j, i) )
+				pad_button = ButtonElement_Pad(is_momentary = True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + current_pad_num, pad_num = current_pad_num, sysex_device_id = self.sysex_device_id, skin = self._skin, name = u'Pad_A_{}_{}'.format(j, i) )
 				current_pad_num = current_pad_num + 1
 				pad_row.append( pad_button )
 			pad_rows_bank_a.insert(0, pad_row) # put new row before the previous one, because the MPK2 numbers the pads starting from bottom and not top
@@ -118,7 +118,7 @@ class MPK249_Plus(ControlSurface):
 		for i in range(PADS_HEIGHT):
 			pad_row = []
 			for j in range(PADS_WIDTH):
-				pad_button = PadButtonElement(True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + 48 + current_pad_num, pad_num = 48 + current_pad_num, sysex_device_id = self.sysex_device_id, skin = self._skin, name = u'Pad_D_{}_{}'.format(j, i) )
+				pad_button = ButtonElement_Pad(True, msg_type = MIDI_NOTE_TYPE, channel = 9, identifier = NOTE_PADS + 48 + current_pad_num, pad_num = 48 + current_pad_num, sysex_device_id = self.sysex_device_id, skin = self._skin, name = u'Pad_D_{}_{}'.format(j, i) )
 				current_pad_num = current_pad_num + 1
 				pad_row.append( pad_button )
 			pad_rows_bank_d.insert(0, pad_row) # put new row before the previous one, because the MPK2 numbers the pads starting from bottom and not top
@@ -126,7 +126,7 @@ class MPK249_Plus(ControlSurface):
 	
 	# Assign knobs to device component
 	def _create_device(self):
-		self._device = DeviceComponent(device_selection_follows_track_selection = True, name=u'Device', is_enabled = False)
+		self._device = DeviceComponent_MultiBank(device_selection_follows_track_selection = True, name=u'Device', is_enabled = False)
 		self._device.set_parameter_controls(self._knobs_matrix)
 		self._device.set_enabled(True)
 
