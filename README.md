@@ -1,6 +1,8 @@
 # Enhanced Ableton Integration for Akai MPK2: MPK249 and MPK261, by bangstk
 SCRIPT IN DEVELOPMENT - NOT ALL FEATURES WORK YET - STAY TUNED
 
+![alt text](preview.png)
+
 Akai MPK2 owners will note that the out-of-the-box Ableton integration with their keyboard is fairly lackluster, offering nothing more than pan knobs and faders mapped for 8 tracks only. 
 Most of the keyboard's features are not utilized with the Ableton built-in MPK2 support.
 
