@@ -1,15 +1,15 @@
 # Enhanced Ableton Integration for Akai MPK2: MPK249 and MPK261, by bangstk
 SCRIPT IN DEVELOPMENT - NOT ALL FEATURES WORK YET - STAY TUNED
 
-![alt text](preview.png)
-
 Akai MPK2 owners will note that the out-of-the-box Ableton integration with their keyboard is fairly lackluster, offering nothing more than pan knobs and faders mapped for 8 tracks only. 
 Most of the keyboard's features are not utilized with the Ableton built-in MPK2 support.
 
 I am developing Ableton control scripts which hopefully make these keyboards much more useful in the Ableton workflow,
 by implementing session box on pads and knob/button output selection that are offered by newer controllers that have Ableton integration.
 
-These scripts were made for Ableton 10 and should work with 11.
+These scripts were made for Ableton 10 and should work with 11. Maybe Ableton 9 but not tested.
+
+![alt text](preview.png)
 
 # Implemented Features:
 - Support for MPK249 and MPK261
